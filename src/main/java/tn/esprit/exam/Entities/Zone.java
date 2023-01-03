@@ -47,7 +47,7 @@ public class Zone implements Serializable {
     private Musee musee;
 
 
-    @OneToMany(mappedBy = "zones")
+    @OneToMany(mappedBy = "zone")
     List<OeuvreArt> oeuvreArts;
 
 

@@ -40,18 +40,19 @@ public class Controller {
         } zoneREPO.save(zone);
         return zone;
     }
-    
+
 //ManytoOne
     @PostMapping("/addOeuvreArtAzone/{idZone}")
     public OeuvreArt ajouterOeuvreArtEtAffecterAZone(@RequestBody OeuvreArt oeuvreArt, @PathVariable Long idZone) {
         Zone zone = zoneREPO.findById(idZone).orElse(null);
         if (zone != null && oeuvreArt != null) {
-            oeuvreArt.setZones(zone);
+            oeuvreArt.setZone(zone);
         }
         oeuvreArtREPO.save(oeuvreArt);
         return (oeuvreArt);
     }
 
+    //DOUBLE RELATION 1-1 / 1-*
     @Transactional
     @PostMapping("/addpersonnelAzone/{idZone}/{idGardien}/{Directeur_id}")
     public Personnel affecterPersonnelsAZone(@PathVariable Long idZone, @PathVariable Long idGardien, @PathVariable Long Directeur_id) throws Exception {
@@ -76,7 +77,8 @@ public class Controller {
     @GetMapping("/titreTableauParMuseeEtDirection/{idMusee}/{direction}")
     public List<String> titreTableauParMuseeEtDirection(@PathVariable Long idMusee,@PathVariable Direction direction) {
 
-        Musee museum = museeREPO.findById(idMusee).orElse(null);
+       /* Musee museum = museeREPO.findById(idMusee).orElse(null);
+
         List<Zone> directorZones = museum.getZones().stream()
                 .filter(z -> z.getDirection().equals(direction))
                 .collect(Collectors.toList());
@@ -87,7 +89,8 @@ public class Controller {
 
         return directorArtworks.stream()
                 .map(OeuvreArt::getTitreTableau)
-                .collect(Collectors.toList());
+               .collect(Collectors.toList());*/
+        return oeuvreArtREPO.titreTableauxParMuseeEtDirection(idMusee,direction);
     }
 
     @Scheduled(fixedRate = 60000)

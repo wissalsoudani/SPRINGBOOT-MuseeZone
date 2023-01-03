@@ -27,5 +27,5 @@ public class OeuvreArt implements Serializable {
 
     @ManyToOne
     @JsonIgnore
-    private  Zone zones;
+    private  Zone zone;
 }
